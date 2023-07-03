@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+     
+<!-- 종결 문자 ; 생략해야 한다  -->
+<mapper namespace="mem">
+
+<!--?기호를 대신하는 문법: 파라미터 바인딩 #{property} -->
+<insert id="insertRow" parameterType="memDTO">
+insert into mem(num,name,age)
+values(mem_seq.nextval,#{name},#{age})
+</insert>
+
+
+
+<select id="selectALL" resultMap="rs">
+select *
+from mem
+order by num desc
+</select>
+<!-- RESULTSET에서 행 값을 가져와서 DTO에 담고 , ARRAYLIST에 추가  -->
+<!--DB에서 가져온 행값을 객체에 매핑하는 방법을 정의 -->
+<resultMap type="net.mem.MemDTO" id="rs">
+<result column="num" property="num"/>
+<result column="name" property="name"/>
+<result column="age" property="age"/>
+</resultMap>
+
+<update id="UpdateRow" parameterType="memDTO">
+update mem
+set name=#{name},age=#{age}
+where num=#{num}
+</update>
+
+<!-- sql문에서 특수문자 <> /  등을 사용해야 하는 경우 -->
+<!-- int age 매개변수  -->
+ <delete id="deleteRow" parameterType="int">
+ <![CDATA[
+ delete from mem
+ where  age>=#{age}
+ ]]>
+ </delete>
+ 
+ <sql id="tablename">
+ select * from mem
+  </sql>
+ 
+ <sql id="sort">
+ order by num desc
+  </sql>
+ 
+ 
+ <select id="search" parameterType="String" resultMap="rs">
+ <include refid="tablename"></include>
+<![CDATA[
+ where name like '%' || #{name} || '%'
+  ]]>
+  <include refid="sort"></include>
+ </select>
+ 
+ <select id="selectRead" parameterType="Integer" resultType="net.mem.MemDTO">
+ <![CDATA[
+ select * from mem
+ where num = #{num}
+   ]]>
+ </select>
+ 
+ <select id="rowCount" parameterType="hashmap" resultType="int">
+ 
+ <![CDATA[
+ select count(*)
+ from mem
+    ]]>
+ </select>
+ 
+ 
+</mapper>

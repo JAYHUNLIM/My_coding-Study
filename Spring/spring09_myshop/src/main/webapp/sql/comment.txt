@@ -1,0 +1,13 @@
+---테이블 생성
+댓글번호 댓글내용 작성자 작성날짜
+--제약조건은 배제
+ create table pcomment(
+  cno number primary key
+  ,product_code number not null
+    ,content  varchar2(255) not null
+    ,wname    varchar2(100) not null
+    ,regdate   date    default sysdate
+    );
+
+
+SQL> create sequence pcomment_seq;

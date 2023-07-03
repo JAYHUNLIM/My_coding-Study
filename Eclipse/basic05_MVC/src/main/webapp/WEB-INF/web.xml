@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>basic05_MVC</display-name>
+  
+  <!--/web-inf/web.xml 배치 관리자  -->
+  <!--환경설정에 관한 내용을 담고있음  -->
+  <!-- 주의사항 :  web.xml이 수정되면 반드시 서버를 재시작 해야함  -->
+  
+  <!-- 첫페이지 자동호출 등록  -->
+  <!--  http://itwil.co.kr -->
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!--세션 시간 등록  -->
+  <session-config>
+  <session-timeout>
+  20
+  </session-timeout>
+  </session-config>
+  
+  <!-- 404 에러가 발생했을때 이동할 페이지 지정  -->
+  <error-page>
+  <error-code>404</error-code>
+  <location>/error/404code.jsp</location>
+  </error-page>
+  
+  <!-- 500 내부 서버 오류  -->
+  <!-- 요청 파라미터 값이 없을때 -->
+  <error-page>
+  <error-code>500</error-code>
+  <location>/error/500code.jsp</location>
+  </error-page>
+  
+  <!-- 서블릿 (httpservlet 생명주기)등록 -->
+  <servlet>
+  <servlet-name>son</servlet-name>
+  <servlet-class>net.control.LifeCycle</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>son</servlet-name>
+  <url-pattern>/life.do</url-pattern>
+  </servlet-mapping>
+  
+  <!--WELCOME  서블릿 등록  -->
+   <servlet>
+  <servlet-name>kim</servlet-name>
+  <servlet-class>net.control.Welcome</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>kim</servlet-name>
+  <url-pattern>/wel.do</url-pattern>
+  </servlet-mapping>
+  
+  <!-- loginForm -->
+   <servlet>
+  <servlet-name>log</servlet-name>
+  <servlet-class>net.control.LoginForm</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>log</servlet-name>
+  <url-pattern>/login.do</url-pattern>
+  </servlet-mapping>
+  
+  <!-- loginProc.do   -->
+   <servlet>
+  <servlet-name>logproc</servlet-name>
+  <servlet-class>net.control.LoginProc</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>logproc</servlet-name>
+  <url-pattern>/loginproc.do</url-pattern>
+  </servlet-mapping>
+  
+  
+</web-app>

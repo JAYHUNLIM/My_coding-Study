@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: black;
+	text-decoration: underline;
+}
+
+a:active {
+	color: black;
+	text-decoration: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-radius: 5px;
+	padding-left: 5px;
+	margin-left: 3px;
+}

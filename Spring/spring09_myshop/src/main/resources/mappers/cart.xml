@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+     
+<mapper namespace="cart">
+
+<insert id="insert" parameterType="kr.co.itwill.cart.CartDTO">
+insert into cart(cartno,product_code,price,qty,id)
+values(cart_seq.nextval,#{product_code},#{price},#{qty},#{id})
+</insert>
+
+<select id="list" parameterType="String" resultType="kr.co.itwill.cart.CartDTO">
+<![CDATA[
+select *
+from cart
+where id=#{id} 
+order by cartno
+]]>
+</select>
+
+<delete id="delete" parameterType="java.util.HashMap">
+delete from cart
+where cartno=#{cartno} and id=#{s_id}
+</delete>
+
+
+</mapper>

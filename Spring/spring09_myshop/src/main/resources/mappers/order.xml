@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+     
+<mapper namespace="order">
+
+<select id="orderno" parameterType="String" resultType="String">
+select nvl(max(orderno),'1')
+from orderlist
+where orderno like #{date} || '%'
+</select>
+
+
+<select id="totalamount" resultType="int" parameterType="String">
+select sum(price*qty)
+from cart
+where id=#{s_id}
+</select>
+
+<insert id="orderlistInsert" parameterType="kr.co.itwill.order.OrderDTO">
+insert into orderlist(orderno,id,totalamount,payment,receiver,rece_address,orderstate)
+values(#{orderno},#{id},#{totalamount},#{payment},#{receiver},#{rece_address},'I')
+</insert>
+
+<insert id="orderdetailInsert" parameterType="java.util.HashMap">
+insert into orderdetail(detailno,orderno,product_code,qty,price)
+select orderdetail_seq.nextval,#{orderno},product_code,qty,price
+from cart
+where id=#{s_id}
+</insert>
+
+<delete id="cartDelete" parameterType="String">
+delete from cart
+where id=#{s_id}
+</delete>
+
+</mapper>

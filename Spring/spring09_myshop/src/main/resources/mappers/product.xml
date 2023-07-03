@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+     
+<!-- 종결 문자 ; 생략해야 한다  -->
+<mapper namespace="product">
+
+<select id="list" resultType="java.util.Map">
+<![CDATA[
+select *
+from product
+order by product_name
+]]>
+</select>
+
+ <insert id="insert" parameterType="java.util.Map">
+ insert into product(product_code,product_name,description,price,filename,filesize)
+ values(product_seq.nextval,#{product_name},#{description},#{price},#{filename},#{filesize})
+ </insert>
+ 
+ <select id="search" parameterType="String" resultType="java.util.Map">
+<![CDATA[
+select *
+from product
+where product_name like  #{keyword}
+order by product_name
+]]>
+ </select>
+ 
+ 
+ <select id="detail" parameterType="int" resultType="java.util.Map">
+select product_code,product_name,description,price,filename
+from product
+where product_code = #{product_code}
+ </select>
+ 
+ <select id="filename" parameterType="int" resultType="String">
+ select filename
+ from product
+ where product_code =#{product_code}
+ </select>
+ 
+ <delete id="delete" parameterType="int">
+ delete from product
+ where product_code=#{product_code}
+ </delete>
+ 
+ <update id="update" parameterType="java.util.Map">
+ update product 
+ set product_name=#{product_name},
+ description=#{description},
+ price=#{price},
+ filename=#{filename},
+ filesize=#{filesize}
+ where product_code =#{product_code}
+ </update>
+ 
+</mapper>

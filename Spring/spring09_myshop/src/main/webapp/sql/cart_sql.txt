@@ -1,0 +1,19 @@
+----장바구니
+
+--번호
+--상품코드
+--가격
+--상품수량
+--아이디
+--작성일
+create table cart(
+cartno number primary key,
+product_code number not null,
+price  number not null,
+qty		number default 0,
+id		varchar2(20),
+regdate		date default sysdate
+);
+
+--sequence
+create sequence cart_seq;

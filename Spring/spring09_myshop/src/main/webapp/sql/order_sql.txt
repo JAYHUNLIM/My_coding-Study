@@ -1,0 +1,43 @@
+----주문서
+주문서 번호, 아이디, 총결제액, 받는사람, 받는주소, 배송메세지,결과 상태,주문날짜
+create table orderlist(
+orderno 	 char(15) primary key,
+id			 varchar2(20) NOT NULL,
+totalamount  number,
+receiver     varchar2(15) NOT NULL ,
+rece_address varchar2(2000) NOT NULL ,
+message		 varchar2(2000),
+orderstate	 CHAR(1) NOT NULL,
+payment varchar(10) NOT NULL,
+orderdate	date default sysdate
+);
+
+
+---------주문 상세내역
+번호, 주문번호,상품콛, 수량, 가격
+create table orderdetail(
+detailno number primary key,
+orderno	char(15) NOT NULL,
+product_code number NOT NULL,
+qty number NOT NULL,
+price number NOT NULL
+);
+
+create sequence orderdetail_seq;
+commit;
+----주문 번호
+select nvl(max(orderno),'1')
+from orderlist
+where orderno like '20230523175647%';
+
+---------총 결제 금액
+select sum(price*qty)
+from cart
+where id=?
+
+---장바구니 옮겨담기
+insert into orderdetail(detailno,orderno,product_code,qty,price)
+select orderdetail_seq.nextval,'20305241303181',product_code,qty,price
+from cart
+where id='test';
+
